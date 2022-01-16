@@ -10,7 +10,7 @@ public class Coords : MonoBehaviour
     [SerializeField] public static Transform left;
     [SerializeField] public static Transform right;
     
-    void Start()
+    void Awake()
     {
         bottom = this.transform.GetChild(0);
         top = this.transform.GetChild(1);

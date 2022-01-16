@@ -105,7 +105,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!251 &1713868279616909908
 PlatformEffector2D:
@@ -142,8 +142,8 @@ EdgeCollider2D:
   m_Offset: {x: 0, y: 0}
   m_EdgeRadius: 0
   m_Points:
-  - {x: 0.20187086, y: 0.009064574}
-  - {x: -0.19115931, y: 0.01536268}
+  - {x: 0.18, y: 0.02}
+  - {x: -0.18, y: 0.02}
   m_AdjacentStartPoint: {x: 0, y: 0}
   m_AdjacentEndPoint: {x: 0, y: 0}
   m_UseAdjacentStartPoint: 0
@@ -160,4 +160,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4582485cb86f6764c93b48c0b2f54471, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  force: {x: 0, y: 375}
+  force: {x: 0, y: 300}
