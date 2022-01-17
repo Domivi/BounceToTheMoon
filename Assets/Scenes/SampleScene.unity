@@ -337,12 +337,12 @@ MonoBehaviour:
   levelPrefab: {fileID: 8273249744080018284, guid: b55de2e7c4cd42e46aebc6045afad46b, type: 3}
   boosterPrefab: {fileID: 293335243262302378, guid: c8fc67a34c2d9ec47bf5202eea1a1224, type: 3}
   paddlePrefab: {fileID: 1995398940763274048, guid: 01119c6fa2d7fc042a627bb5ceca805d, type: 3}
-  yOffSet: 1
+  yOffSet: 4
   xOffSet: 1
   ySpawnCount: 4
   xSpawnCount: 4
   generalSpawnCount: 0
-  initialSpawnPoint: {x: 0, y: 4, z: 0}
+  initialSpawnPoint: {x: 0, y: 8, z: 0}
 --- !u!4 &499237622
 Transform:
   m_ObjectHideFlags: 0
