@@ -10,14 +10,13 @@ public class LevelSetup : MonoBehaviour
     [SerializeField] private GameObject levelPrefab; 
     [SerializeField] private GameObject boosterPrefab;
     [SerializeField] private GameObject paddlePrefab;
-
-    [SerializeField] private int yOffSet = 4;
-    [SerializeField] private float xOffSet; 
-
-    [SerializeField] private int ySpawnCount;
-    [SerializeField] private int xSpawnCount;
-
-    [SerializeField] private int generalSpawnCount = 0;
+    [SerializeField] private int yOffSetPerLoop = 4;
+    [SerializeField] private float minYOffSet = 0.1f;
+    [SerializeField] private float maxYOffSet = 0.3f;
+    [SerializeField] private float addedYOffSet; 
+    [SerializeField] private int minPaddleSpawnCount;
+    [SerializeField] private int maxPaddleSpawnCount;
+    [SerializeField] private int levelSpawnCount = 0;
 
     [SerializeField] private Vector3 initialSpawnPoint = new Vector3(0f, 8f, 0f);
 
@@ -42,25 +41,37 @@ public class LevelSetup : MonoBehaviour
 
     public void GenerateLevel()
     {
+        int paddleSpawnCountRoll = Random.Range(minPaddleSpawnCount, maxPaddleSpawnCount);
+
         activeLevels.Add(Instantiate(levelPrefab, initialSpawnPoint, Quaternion.identity));
-        for (int i = 0; i < xSpawnCount; i++)
+
+        float currentLoopYMax = Coords.bottom.position.y + ((levelSpawnCount + 1) * yOffSetPerLoop) + 4f;
+
+        addedYOffSet = currentLoopYMax - 4f;
+        for (int i = 0; i < paddleSpawnCountRoll; i++)
         {
-            for (int j = 0; j < ySpawnCount; j++)
+            float yOffSetRoll = yOffSetPerLoop / (float)paddleSpawnCountRoll;
+            float ySpawnPosition = Mathf.Clamp(addedYOffSet, currentLoopYMax - yOffSetPerLoop, currentLoopYMax);
+            addedYOffSet += yOffSetRoll;
+
+            Debug.Log($"addedYOffSet: {addedYOffSet}");
+
+            GameObject paddleToInstantiate =  selectPaddleVariant();
+            Vector3 paddlePosition = new Vector3(Random.Range(Coords.left.position.x, Coords.right.position.x), ySpawnPosition, 0f);
+            GameObject paddle = Instantiate(paddleToInstantiate, paddlePosition, Quaternion.identity);
+
+            if(activeLevels.Count > 3)
             {
-                Vector3 paddlePosition = new Vector3(Random.Range(Coords.left.position.x, Coords.right.position.x), Random.Range(Coords.bottom.position.y + ((generalSpawnCount + 1) * yOffSet), Coords.top.position.y + ((generalSpawnCount + 1) * yOffSet)), 0f);
-                GameObject paddle = Instantiate(paddlePrefab, paddlePosition, Quaternion.identity);
-                if(activeLevels.Count > 3)
-                {
-                    paddle.transform.SetParent(activeLevels[3].transform);
-                }
-                else
-                {
-                    paddle.transform.SetParent(activeLevels[generalSpawnCount].transform);
-                }
+                paddle.transform.SetParent(activeLevels[3].transform);
+            }
+            else
+            {
+                paddle.transform.SetParent(activeLevels[levelSpawnCount].transform);
             }
         }
-        initialSpawnPoint = new Vector3(0f, (yOffSet * generalSpawnCount + 8f), 0f);
-        generalSpawnCount++;
+
+        initialSpawnPoint = new Vector3(0f, (yOffSetPerLoop *  levelSpawnCount + 8f), 0f);
+        levelSpawnCount++;
 
         if (activeLevels.Count > 3)
         {
@@ -68,4 +79,22 @@ public class LevelSetup : MonoBehaviour
             activeLevels.RemoveAt(activeLevels.Count - 4);
         }
     }
-}
+
+    private GameObject selectPaddleVariant()
+    {
+        float boosterRoll = 0.25f; 
+        float randomRoll = Random.Range(0f, 1f);
+        GameObject paddleToInstantiate; 
+
+        if (randomRoll > boosterRoll)
+        {
+            paddleToInstantiate = paddlePrefab;
+            return paddleToInstantiate;
+        }
+        else 
+        {
+            paddleToInstantiate = boosterPrefab;
+            return paddleToInstantiate;
+        }
+    }
+}   
