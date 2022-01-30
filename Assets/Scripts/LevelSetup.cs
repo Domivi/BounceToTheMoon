@@ -17,9 +17,7 @@ public class LevelSetup : MonoBehaviour
     [SerializeField] private int minPaddleSpawnCount;
     [SerializeField] private int maxPaddleSpawnCount;
     [SerializeField] private int levelSpawnCount = 0;
-
     [SerializeField] private Vector3 initialSpawnPoint = new Vector3(0f, 8f, 0f);
-
 
     void Awake()
     {
@@ -32,7 +30,6 @@ public class LevelSetup : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
     
     void Start()
     {
@@ -42,20 +39,16 @@ public class LevelSetup : MonoBehaviour
     public void GenerateLevel()
     {
         int paddleSpawnCountRoll = Random.Range(minPaddleSpawnCount, maxPaddleSpawnCount);
-
         activeLevels.Add(Instantiate(levelPrefab, initialSpawnPoint, Quaternion.identity));
-
         float currentLoopYMax = Coords.bottom.position.y + ((levelSpawnCount + 1) * yOffSetPerLoop) + 4f;
-
         addedYOffSet = currentLoopYMax - 4f;
+
         for (int i = 0; i < paddleSpawnCountRoll; i++)
         {
             float yOffSetRoll = yOffSetPerLoop / (float)paddleSpawnCountRoll;
             float ySpawnPosition = Mathf.Clamp(addedYOffSet, currentLoopYMax - yOffSetPerLoop, currentLoopYMax);
             addedYOffSet += yOffSetRoll;
-
-            Debug.Log($"addedYOffSet: {addedYOffSet}");
-
+            
             GameObject paddleToInstantiate =  selectPaddleVariant();
             Vector3 paddlePosition = new Vector3(Random.Range(Coords.left.position.x, Coords.right.position.x), ySpawnPosition, 0f);
             GameObject paddle = Instantiate(paddleToInstantiate, paddlePosition, Quaternion.identity);
@@ -73,6 +66,7 @@ public class LevelSetup : MonoBehaviour
         initialSpawnPoint = new Vector3(0f, (yOffSetPerLoop *  levelSpawnCount + 8f), 0f);
         levelSpawnCount++;
 
+        // Destroy previous "level blocks", so that only 3 are available at a time. 
         if (activeLevels.Count > 3)
         {
             Destroy(activeLevels[activeLevels.Count - 4]);

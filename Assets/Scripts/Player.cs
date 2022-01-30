@@ -15,8 +15,6 @@ public class Player : MonoBehaviour
     public Rigidbody2D rb;
     public float maxHeight = 0f;
     
-    
-
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -26,6 +24,8 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1) || Input.GetMouseButtonDown(2)) rb.gravityScale = 0.9f;
 
         //Setting maxHeight, used for the camera Y axis cap.
         if (maxHeight < transform.position.y)
@@ -49,7 +49,7 @@ public class Player : MonoBehaviour
             Vector3 mouseWorldPosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);
             playerLocation = new Vector3(mouseWorldPosition.x, transform.position.y, 0f);
             // transform.position = playerLocation;
-            transform.position = new Vector3(Mathf.SmoothStep(transform.position.x, playerLocation.x, speed * Time.deltaTime), 
+            transform.position = new Vector3(Mathf.SmoothStep(transform.position.x, playerLocation.x, speed * Time.deltaTime),
                                              Mathf.SmoothStep(transform.position.y, playerLocation.y, speed * Time.deltaTime),
                                              Mathf.SmoothStep(transform.position.z, playerLocation.z, speed * Time.deltaTime));
 
