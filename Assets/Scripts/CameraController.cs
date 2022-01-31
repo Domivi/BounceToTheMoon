@@ -10,13 +10,7 @@ public class CameraController : MonoBehaviour
     // [SerializeField] private float smoothStepSeconds = 0.2f;
     private float xPosition = 0f;
     private Vector3 finalCameraPosition;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
+  
     void LateUpdate()
     {
         finalCameraPosition = new Vector3(xPosition, player.maxHeight - yOffSet, player.gameObject.transform.position.z - zOffSet);

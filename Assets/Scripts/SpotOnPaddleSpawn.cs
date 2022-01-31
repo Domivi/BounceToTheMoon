@@ -10,7 +10,12 @@ public class SpotOnPaddleSpawn : MonoBehaviour
     {
         if (spawnCoinOnPaddle())
         {
-            Instantiate(coinPrefab, transform.position, Quaternion.identity);
+            // Checking the last index of the activeLevels list, in order to place the spawned coin on the last "level" of the list.
+            var lastIndex = LevelSetup.singleton.activeLevels.Count;
+            if (lastIndex == 0) return;
+            GameObject spawnedCoin = Instantiate(coinPrefab, transform.position, Quaternion.identity);
+            spawnedCoin.transform.SetParent(LevelSetup.singleton.activeLevels[lastIndex-1].transform);
+            // TODO: Parent it to the paddle object so that coins get destroyed as well.
         }
     }
     private bool spawnCoinOnPaddle()

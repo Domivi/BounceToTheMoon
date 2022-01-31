@@ -6,7 +6,7 @@ public class LevelSetup : MonoBehaviour
 {
     
     public static LevelSetup singleton;
-    [SerializeField] private List<GameObject> activeLevels = new List<GameObject>();
+    [SerializeField] public List<GameObject> activeLevels = new List<GameObject>();
     [SerializeField] private GameObject levelPrefab; 
     [SerializeField] private GameObject boosterPrefab;
     [SerializeField] private GameObject paddlePrefab;
@@ -89,6 +89,19 @@ public class LevelSetup : MonoBehaviour
         {
             paddleToInstantiate = boosterPrefab;
             return paddleToInstantiate;
+        }
+    }
+
+    public void GameoverDestroyObjects()
+    {
+        Debug.Log(activeLevels.Count);
+        var levelCount = activeLevels.Count; 
+        if(levelCount == 0) return;
+        for (int level = 0; level < levelCount; level++)
+        {
+            Debug.Log($" Level: {level}");
+            Destroy(activeLevels[level]);
+            activeLevels.RemoveAt(level);
         }
     }
 }   

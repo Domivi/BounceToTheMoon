@@ -10,7 +10,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Player player;
     public static GameManager instance;
     private float previouslyCheckedScore = 0f;
-    public float score;
+    public float heightScore;
+    private float combinedScore;
+    public float amassedCoinScore;
+    public float highestSessionScore;
 
     void Awake()
     {
@@ -26,11 +29,19 @@ public class GameManager : MonoBehaviour
     }
     void Update()
     {
-        score += Mathf.Round(player.maxHeight * scoreMultiplier);  
-        if (score != previouslyCheckedScore)
+        heightScore = Mathf.Round(player.maxHeight * scoreMultiplier);  
+        if (heightScore != previouslyCheckedScore)
         {
-            previouslyCheckedScore = score;
-            scoreText.text = score.ToString();
+            previouslyCheckedScore = heightScore;
+            combinedScore = heightScore + amassedCoinScore;
+            scoreText.text = combinedScore.ToString();
         }
+    }
+
+    float HighestSessionScore()
+    {
+        if(!(combinedScore > highestSessionScore)) return highestSessionScore;
+        highestSessionScore = combinedScore;
+        return highestSessionScore;
     }
 }
