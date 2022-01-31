@@ -94,14 +94,11 @@ public class LevelSetup : MonoBehaviour
 
     public void GameoverDestroyObjects()
     {
-        Debug.Log(activeLevels.Count);
-        var levelCount = activeLevels.Count; 
-        if(levelCount == 0) return;
-        for (int level = 0; level < levelCount; level++)
+        if(activeLevels.Count == 0) return;
+        while (activeLevels.Count > 0)
         {
-            Debug.Log($" Level: {level}");
-            Destroy(activeLevels[level]);
-            activeLevels.RemoveAt(level);
+            Destroy(activeLevels[0]);
+            activeLevels.RemoveAt(0);    
         }
     }
 }   
