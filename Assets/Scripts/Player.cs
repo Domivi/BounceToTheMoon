@@ -24,7 +24,6 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1) || Input.GetMouseButtonDown(2)) rb.gravityScale = 0.9f;
 
         //Setting maxHeight, used for the camera Y axis cap.

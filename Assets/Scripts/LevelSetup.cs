@@ -11,13 +11,14 @@ public class LevelSetup : MonoBehaviour
     [SerializeField] private GameObject boosterPrefab;
     [SerializeField] private GameObject paddlePrefab;
     [SerializeField] private int yOffSetPerLoop = 4;
-    [SerializeField] private float minYOffSet = 0.1f;
-    [SerializeField] private float maxYOffSet = 0.3f;
+    // [SerializeField] private float minYOffSet = 0.1f;
+    // [SerializeField] private float maxYOffSet = 0.3f;
     [SerializeField] private float addedYOffSet; 
     [SerializeField] private int minPaddleSpawnCount;
     [SerializeField] private int maxPaddleSpawnCount;
     [SerializeField] private int levelSpawnCount = 0;
     [SerializeField] private Vector3 initialSpawnPoint = new Vector3(0f, 8f, 0f);
+    private const float padSpawnPositionCap = 3.35f;
 
     void Awake()
     {
@@ -36,6 +37,16 @@ public class LevelSetup : MonoBehaviour
         GenerateLevel();
     }
 
+    void OnEnable()
+    {
+        GameOver.onGameOver += GameoverDestroyObjects;
+    }
+
+    void OnDisable()
+    {
+        GameOver.onGameOver -= GameoverDestroyObjects;
+    }
+
     public void GenerateLevel()
     {
         int paddleSpawnCountRoll = Random.Range(minPaddleSpawnCount, maxPaddleSpawnCount);
@@ -50,7 +61,7 @@ public class LevelSetup : MonoBehaviour
             addedYOffSet += yOffSetRoll;
             
             GameObject paddleToInstantiate =  selectPaddleVariant();
-            Vector3 paddlePosition = new Vector3(Random.Range(Coords.left.position.x, Coords.right.position.x), ySpawnPosition, 0f);
+            Vector3 paddlePosition = new Vector3(Random.Range(-padSpawnPositionCap, padSpawnPositionCap), ySpawnPosition, 0f);
             GameObject paddle = Instantiate(paddleToInstantiate, paddlePosition, Quaternion.identity);
 
             if(activeLevels.Count > 3)
@@ -94,7 +105,6 @@ public class LevelSetup : MonoBehaviour
 
     public void GameoverDestroyObjects()
     {
-        if(activeLevels.Count == 0) return;
         while (activeLevels.Count > 0)
         {
             Destroy(activeLevels[0]);

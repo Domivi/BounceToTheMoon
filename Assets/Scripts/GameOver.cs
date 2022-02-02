@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class GameOver : MonoBehaviour
 {
-
+    
     [SerializeField] private Player player;
+
+    public delegate void OnGameOver();
+    public static event OnGameOver onGameOver;
     void Start()
     {
         
@@ -16,7 +19,7 @@ public class GameOver : MonoBehaviour
         if (col.gameObject.CompareTag("Player"))
         {
             player.canMove = false;
-            LevelSetup.singleton.GameoverDestroyObjects();
+            onGameOver();
         }
     }
 }

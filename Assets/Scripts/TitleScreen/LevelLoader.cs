@@ -17,7 +17,14 @@ public class LevelLoader : MonoBehaviour
 
     public void LoadPlayScene()
     {
-        StartCoroutine(LoadLevelTransition(SceneManager.GetActiveScene().buildIndex + 1));
+        if (SceneManager.GetActiveScene().buildIndex == 0)
+        {
+            StartCoroutine(LoadLevelTransition(SceneManager.GetActiveScene().buildIndex + 1));
+        }
+        else
+        {
+            StartCoroutine(LoadLevelTransition(SceneManager.GetActiveScene().buildIndex));
+        }
     }
 
     private IEnumerator LoadLevelTransition(int levelIndex)
@@ -25,12 +32,5 @@ public class LevelLoader : MonoBehaviour
         transition.SetTrigger("Start");
         yield return new WaitForSeconds(transitionTime);
         SceneManager.LoadScene(levelIndex);
-        
-        // Tonight we're having spaghettiiiiii
-        yield return new WaitForSeconds(transitionTime);
-        transition.SetTrigger("End");
-        yield return new WaitForSeconds(transitionTime);
-        scoreText = GameObject.Find("FrontCanvas");
-        scoreText.transform.GetChild(0).gameObject.SetActive(true);
     }
 }

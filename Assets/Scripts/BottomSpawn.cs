@@ -14,8 +14,4 @@ public class BottomSpawn : MonoBehaviour
         }
     }
 
-    // void Update()
-    // {
-    //     Debug.Log(colliderTouchedOnce);
-    // }
 }
