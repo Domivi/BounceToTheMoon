@@ -6,7 +6,7 @@ public class BoosterPaddle : MonoBehaviour
 {
 
     [SerializeField] private Vector2 force = new Vector2(0f, 1100f);
-    private float boostReductionMultiplier = 0.75f;
+    private float boostReductionMultiplier = 1.15f;
     // Start is called before the first frame update
     void Start()
     {

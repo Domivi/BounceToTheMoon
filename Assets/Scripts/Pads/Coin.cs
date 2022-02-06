@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class Coin : MonoBehaviour
 {
-    [SerializeField] float scoreToGive = 1000f;
+    [SerializeField] float scoreToGive = 500f;
     void OnTriggerEnter2D(Collider2D col)
     {
         if (col.CompareTag("Player"))
         {
-            GameManager.instance.amassedCoinScore += scoreToGive;
+            GameManager.instance.AddCoinScore(scoreToGive);
             Destroy(gameObject);
         }
     }
