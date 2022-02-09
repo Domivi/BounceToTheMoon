@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
     public float heightScore;
     private float combinedScore;
     public float amassedCoinScore;
-    public float highestSessionScore;
+    public float highScore;
 
     void OnEnable()
     {
@@ -47,28 +47,24 @@ public class GameManager : MonoBehaviour
         combinedScore = heightScore + amassedCoinScore;
         previouslyCheckedScore = heightScore;
         scoreText.text = combinedScore.ToString();
-        // if (heightScore != previouslyCheckedScore)
-        // {
-        //     previouslyCheckedScore = heightScore;
-        //     scoreText.text = combinedScore.ToString();
-        // }
     }
 
+    // Sets high score and saves high score for session
     public float HighestSessionScore()
     {
-        if(!(combinedScore > highestSessionScore)) return highestSessionScore;
-        highestSessionScore = combinedScore;
-        return highestSessionScore;
+        if(!(combinedScore > PlayerPrefs.GetFloat("highscore", highScore))) return PlayerPrefs.GetFloat("highscore", highScore);
+        highScore = combinedScore;
+        PlayerPrefs.SetFloat("highscore", highScore);
+        PlayerPrefs.Save();
+        return PlayerPrefs.GetFloat("highscore", 0);
     }
     public void AddCoinScore (float scoreToGive)
     {
         amassedCoinScore += scoreToGive;
-        GameObject text = Instantiate(coinText);
-        text.transform.SetParent(GameObject.FindGameObjectWithTag("FrontCanvas").transform, false);
     }
 
     // Enables or disables Game Over Texts
-    private void SwitchGameOverTextsStatus()
+    public void SwitchGameOverTextsStatus()
     {
         if(gameOverUI[0].activeSelf)
         {
@@ -76,6 +72,7 @@ public class GameManager : MonoBehaviour
             {
                 gameOverUI[UI].SetActive(false);
             }
+            return;
         }        
         for (int UI = 0; UI < gameOverUI.Length; UI++)
         {
@@ -83,6 +80,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    // Set the Score Texts values on Game Over
     private void updateGameOverUIContent()
     {
         gameOverUI[1].GetComponent<TextMeshProUGUI>().SetText($"Final Score:   {combinedScore}");

@@ -23,6 +23,7 @@ public class LevelLoader : MonoBehaviour
         }
         else
         {
+            GameManager.instance.SwitchGameOverTextsStatus();
             StartCoroutine(LoadLevelTransition(SceneManager.GetActiveScene().buildIndex));
         }
     }

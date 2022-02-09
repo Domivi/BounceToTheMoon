@@ -122,4 +122,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 369a044f1785bad48aa9614a78cd06d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  coinText: {fileID: 3668259903112285291, guid: 2f63939f32c98e34da16f20f5d13b3df, type: 3}
   scoreToGive: 500

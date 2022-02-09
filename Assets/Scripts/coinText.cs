@@ -13,7 +13,7 @@ public class coinText : MonoBehaviour
     void Start()
     {
         Vector3 targetPosition = this.transform.position;
-        targetPosition.y += 1f;
+        targetPosition.y += 0.5f;
         this.GetComponent<AudioSource>().PlayOneShot(GetComponent<AudioSource>().clip);
         transform.DOMove(targetPosition, animationDuration, false);
         Destroy(gameObject, animationDuration);
