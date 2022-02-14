@@ -6,7 +6,10 @@ public class BoosterPaddle : MonoBehaviour
 {
 
     [SerializeField] private Vector2 force = new Vector2(0f, 1100f);
-    private float boostReductionMultiplier = 1.15f;
+    [SerializeField] private ParticleSystem moonParticles; 
+    [SerializeField] private ParticleSystem starParticles;
+    [SerializeField] private AudioSource sfx;     
+    private float boostReductionMultiplier = 0.9f;
     // Start is called before the first frame update
     void Start()
     {

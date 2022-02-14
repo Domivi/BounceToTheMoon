@@ -83,8 +83,8 @@ public class GameManager : MonoBehaviour
     // Set the Score Texts values on Game Over
     private void updateGameOverUIContent()
     {
-        gameOverUI[1].GetComponent<TextMeshProUGUI>().SetText($"Final Score:   {combinedScore}");
+        gameOverUI[1].GetComponent<TextMeshProUGUI>().SetText($"Final Score: {combinedScore}");
         float highScore = HighestSessionScore();
-        gameOverUI[2].GetComponent<TextMeshProUGUI>().SetText($"High Score:   {highScore}");
+        gameOverUI[2].GetComponent<TextMeshProUGUI>().SetText($"High Score: {highScore}");
     }
 }
